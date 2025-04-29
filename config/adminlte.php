@@ -350,13 +350,15 @@ return [
                         [
                             'text' => 'Generos',
                             'icon' => 'fas fa-dragon',
-                            'url' => '#',
+                            'url' => '/genero',
+                            'active' => ['genero*'],
                             
                         ],
                         [
                             'text' => 'Autores',
                             'icon' => 'fas fa-user',
-                            'url' => '#',
+                            'url' => '/autor',
+                            'active' => ['autor*'],
                         ],
                     ],
                 ],

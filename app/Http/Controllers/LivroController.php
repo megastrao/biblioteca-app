@@ -17,16 +17,19 @@ class LivroController extends Controller
      */
     public function index(Request $request)
     {
-           
+
         if (request()->ajax()) {
-            
-            $data = Livro::latest()
-                ->with(['autor', 'editora', 'genero'])
-                ->get();
-            
-        return DataTables::of($data)
-            ->addColumn('action', function ($row) {
-                $actionBtns = '
+
+            $data = Livro::with(['autor', 'editora'])->get(); // Certifique-se de carregar as relações
+            return DataTables::of($data)
+                ->addColumn('autor', function ($row) {
+                    return $row->autor->autor ?? 'N/A'; // Ajuste o campo conforme o nome no modelo
+                })
+                ->addColumn('editora', function ($row) {
+                    return $row->editora->editora ?? 'N/A'; // Ajuste o campo conforme o nome no modelo
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtns = '
                     <a href="' . route("livro.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                     
                     <form action="' . route("livro.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
@@ -35,11 +38,11 @@ class LivroController extends Controller
                         <button type="submit" class="btn btn-outline-danger btn-sm ml-2")><i class="fas fa-trash"></i></button>
                     </form>
                 ';
-                return $actionBtns;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
+                    return $actionBtns;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         return view('livros.index');
     }
@@ -58,7 +61,7 @@ class LivroController extends Controller
             'editoras' => $editoras,
             'generos' => $generos
         );
-        
+
         return view('livros.crud', $output);
     }
 
@@ -84,7 +87,6 @@ class LivroController extends Controller
         $livro->save();
 
         return view('livros.index');
-        
     }
 
     /**
@@ -98,24 +100,55 @@ class LivroController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+
+        $livro = Livro::find($id);
+        $autores = Autor::all();
+        $editoras = Editora::all();
+        $generos = Genero::all();
+
+        $output = array(
+            'autores' => $autores,
+            'editoras' => $editoras,
+            'generos' => $generos,
+            'edit' => $livro
+        );
+
+        return view('livros.crud', $output);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        $livro_data = $request->all();
+
+        $livro = Livro::find($id);
+        $livro->isbn = $livro_data['isbn'];
+        $livro->titulo = $livro_data['titulo'];
+        $livro->autor_id = $livro_data['autor_id'];
+        $livro->editora_id = $livro_data['editora_id'];
+        $livro->genero_id = $livro_data['genero_id'];
+        $livro->classificacao = $livro_data['classificacao'];
+        $livro->edicao = $livro_data['edicao'];
+        $livro->saldo = $livro_data['saldo'];
+        $livro->last_user = $user->name;
+        $livro->update();
+
+        return view('livros.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $livro = Livro::find($id);
+        $livro->delete();
+
+        return view('livros.index');
     }
 }

@@ -11,8 +11,10 @@
         <div class="card-header">
             <h3 class="card-title">Cadastro de Livros</h3>
         </div>
-        <div class="card-body"s>
+        <div class="card-body">
             <div class="form-group">
+
+               
 
                 @if (isset($edit->id))
                     <form method="post" action="{{ route('livro.update', ['livro' => $edit->id]) }}">
@@ -55,7 +57,7 @@
                         <select class="form-control" id="autor_id" name="autor_id">
                             <option value="">Selecione</option>
                             @foreach ($autores as $autor)
-                                <option value="{{ $autor->id }}" {{ isset($edit->id) == $autor->id ? 'selected' : '' }}>
+                                <option value="{{ $autor->id }}" {{ @$edit->autor_id == $autor->id ? 'selected' : '' }}>
                                     {{ $autor->autor }}
                                 </option>
                             @endforeach
@@ -72,8 +74,9 @@
                         <select class="form-control" id="editora_id" name="editora_id">
                             <option value="">Selecione</option>
                             @foreach ($editoras as $editora)
+                                
                                 <option value="{{ $editora->id }}"
-                                    {{ isset($edit->id) == $editora->id ? 'selected' : '' }}>
+                                    {{ @$edit->editora_id == $editora->id ? 'selected' : '' }}>
                                     {{ $editora->editora }}
                                 </option>
                             @endforeach
@@ -91,7 +94,7 @@
                             <option value="">Selecione</option>
                             @foreach ($generos as $genero)
                                 <option value="{{ $genero->id }}"
-                                    {{ isset($edit->id) == $genero->id ? 'selected' : '' }}>
+                                    {{ @$edit->genero_id == $genero->id ? 'selected' : '' }}>
                                     {{ $genero->genero }}
                                 </option>
                             @endforeach
