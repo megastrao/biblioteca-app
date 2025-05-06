@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('dias_locacao')->nullable();
             $table->datetime('data_prevista_devolucao')->nullable();
             $table->datetime('data_devolucao')->nullable();
+            $table->boolean('deletado')->default(0);
             $table->string('origin_user')->nullable();
             $table->string('last_user')->nullable();
             $table->timestamps();

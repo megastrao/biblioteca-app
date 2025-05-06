@@ -20,4 +20,6 @@ class Locacao extends Model
     {
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
+
+   
 }
