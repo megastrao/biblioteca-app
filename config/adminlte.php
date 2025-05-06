@@ -364,21 +364,24 @@ return [
                 ],
                 [
                     'text' => 'Livros',
-                    'icon' => 'fas fa-user',
+                    'icon' => 'fas fa-book',
                     'url' => '/livro',
                     'active' => ['livro*'],
                 ],
                 [
                     'text' => 'Clientes',
                     'icon' => 'fas fa-user',
-                    'url' => '#',
+                    'url' => '/cliente',
+                    'active' => ['cliente*'],
                 ],
             ],
         ],
         [
-            'text' => 'Cadastros',
-            'icon' => 'fas fa-pen-alt',
-        ],
+            'text' => 'Locação',
+            'icon' => 'fas fa-retweet',
+            'url' => '/locacao',
+            'active' => ['locacao*'],
+        ]
         
         // ['header' => 'labels'],
         // [

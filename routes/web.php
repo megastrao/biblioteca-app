@@ -17,6 +17,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('livro', App\Http\Controllers\LivroController::class);
     Route::resource('genero', App\Http\Controllers\GeneroController::class);
     Route::resource('autor', App\Http\Controllers\AutorController::class);
+    Route::resource('cliente', App\Http\Controllers\ClienteController::class);
+    Route::resource('locacao', App\Http\Controllers\LocacaoController::class);
+
 
 
 });
