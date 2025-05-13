@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('autor', App\Http\Controllers\AutorController::class);
     Route::resource('cliente', App\Http\Controllers\ClienteController::class);
     Route::resource('locacao', App\Http\Controllers\LocacaoController::class);
+
+    Route::get('/consulta-cep', [ClienteController::class, 'consultaCep'])->name('consulta.cep');
 
 
 
